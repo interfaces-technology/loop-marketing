@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
+import { DemoPage } from "@/components/demo-page";
 import { LiveTextDemo } from "@/components/live-text-demo";
 
 export const metadata: Metadata = {
@@ -10,20 +10,16 @@ export const metadata: Metadata = {
 
 export default function LiveTextPage() {
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">
-          <Link href="/examples" className="hover:text-foreground">
-            Examples
-          </Link>
-          <span> / Live text</span>
-        </p>
-        <h1 className="text-3xl font-medium tracking-tight">Live text</h1>
-        <p className="max-w-xl leading-7 text-muted">
+    <DemoPage
+      title="Live text"
+      signal="keyboard → data.text → mirror"
+      description={
+        <p>
           Keyboard → uppercase transform → sink. The mirror updates on every keystroke.
         </p>
-      </div>
+      }
+    >
       <LiveTextDemo />
-    </div>
+    </DemoPage>
   );
 }

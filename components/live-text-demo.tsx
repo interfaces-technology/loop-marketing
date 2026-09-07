@@ -56,18 +56,36 @@ export function LiveTextDemo() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <p className="text-xs tracking-[0.1em] text-muted uppercase">device: keyboard</p>
-      <textarea
-        className="h-[120px] w-full max-w-lg resize-y rounded-lg border border-[#333] bg-[#1a1a1a] p-4 text-base text-foreground outline-none focus:border-[#555] focus:outline-2 focus:outline-[#555]"
-        placeholder="Type here…"
-        autoFocus
-        rows={4}
-      />
-      <div
-        className={`min-h-[80px] w-full max-w-lg rounded-lg border border-border bg-panel p-4 text-xl leading-relaxed break-words ${mirror ? "" : "text-muted italic"}`}
-      >
-        {mirror || EMPTY}
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5">
+      <div className="flex items-center justify-between font-mono text-[0.65rem] tracking-[0.1em] uppercase">
+        <span className="text-subtle">Input channel</span>
+        <span className="flex items-center gap-2 text-signal">
+          <span className="h-1.5 w-1.5 bg-signal" aria-hidden="true" />
+          keyboard
+        </span>
+      </div>
+      <div className="grid gap-px bg-border md:grid-cols-2">
+        <label className="bg-background p-4">
+          <span className="font-mono text-[0.65rem] tracking-[0.1em] text-accent uppercase">
+            source / raw
+          </span>
+          <textarea
+            className="mt-3 h-48 w-full resize-none border-0 bg-transparent text-base leading-7 text-foreground outline-none placeholder:text-subtle"
+            placeholder="Type a signal…"
+            autoFocus
+            rows={6}
+          />
+        </label>
+        <div className="bg-background p-4">
+          <p className="font-mono text-[0.65rem] tracking-[0.1em] text-signal uppercase">
+            sink / uppercase
+          </p>
+          <div
+            className={`mt-3 min-h-48 text-xl leading-8 break-words ${mirror ? "text-foreground" : "text-muted italic"}`}
+          >
+            {mirror || EMPTY}
+          </div>
+        </div>
       </div>
     </div>
   );

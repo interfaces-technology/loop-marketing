@@ -15,18 +15,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://loop.theinterfaces.company"),
   title: {
     default: "Loop — the wire",
     template: "%s · Loop",
   },
   description:
     "Loop is the wire. You author the two ends; Loop carries a normalized packet between them and never renders anything itself.",
+  openGraph: {
+    title: "Loop — the wire",
+    description:
+      "A tiny, framework-free wire for normalized input and output in the browser.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CodeBlock } from "@/components/code-block";
+import { LocalNav, PageHeader, SectionHeading } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "API",
@@ -19,49 +20,67 @@ const HANDLES = `loop.input(name): Handle
 loop.output(name): Sink
 loop.tick(fn): () => void`;
 
+const API_SECTIONS = [
+  { id: "stages", label: "Stage registration" },
+  { id: "pipe", label: "Pipe" },
+  { id: "handles", label: "Input and tick" },
+] as const;
+
 export default function ApiPage() {
   return (
-    <article className="flex max-w-2xl flex-col gap-10">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-medium tracking-tight">API</h1>
-        <p className="leading-7 text-muted">
+    <div>
+      <PageHeader
+        eyebrow="Reference / v0.1"
+        title="Small surface. One contract."
+        description={
+          <p>
           v0.1 surface. <code className="font-mono text-foreground">layout</code>,{" "}
           <code className="font-mono text-foreground">filter</code>, and{" "}
           <code className="font-mono text-foreground">capture</code> are stubs until slice 4+.
-        </p>
-        <CodeBlock code={SURFACE} />
-      </div>
+          </p>
+        }
+      >
+        <div className="max-w-2xl">
+          <CodeBlock code={SURFACE} label="public surface" />
+        </div>
+      </PageHeader>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-medium">source / transform / sink</h2>
-        <p className="leading-7 text-muted">
+      <div className="grid gap-10 pt-10 lg:grid-cols-[13rem_minmax(0,44rem)] lg:gap-14">
+        <aside className="lg:sticky lg:top-24 lg:self-start">
+          <LocalNav items={API_SECTIONS} />
+        </aside>
+        <article className="min-w-0 divide-y divide-border">
+          <section id="stages" className="scroll-mt-24 pb-12">
+            <SectionHeading index="01" title="source / transform / sink" />
+            <p className="leading-7 text-muted">
           Register a stage. <code className="font-mono text-foreground">component()</code> dispatches
           on whether the def has <code className="font-mono text-foreground">read</code>,{" "}
           <code className="font-mono text-foreground">process</code>, or{" "}
           <code className="font-mono text-foreground">render</code>.
-        </p>
-      </section>
+            </p>
+          </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-medium">pipe</h2>
-        <p className="leading-7 text-muted">
-          Type-checks adjacent stages, then returns a pipeline with{" "}
-          <code className="font-mono text-foreground">start()</code> /{" "}
-          <code className="font-mono text-foreground">stop()</code>.
-        </p>
-        <CodeBlock code={PIPE} />
-      </section>
+          <section id="pipe" className="scroll-mt-24 py-12">
+            <SectionHeading index="02" title="pipe">
+              Type-checks adjacent stages, then returns a pipeline with{" "}
+              <code className="font-mono text-foreground">start()</code> and{" "}
+              <code className="font-mono text-foreground">stop()</code>.
+            </SectionHeading>
+            <CodeBlock code={PIPE} label="wiring" />
+          </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-medium">input / tick</h2>
-        <p className="leading-7 text-muted">
-          Built-in inputs: <code className="font-mono text-foreground">keyboard</code>,{" "}
-          <code className="font-mono text-foreground">dpad</code>,{" "}
-          <code className="font-mono text-foreground">sliders</code>. Bind the handle to your own
-          element. Hardware sinks come later.
-        </p>
-        <CodeBlock code={HANDLES} />
-      </section>
-    </article>
+          <section id="handles" className="scroll-mt-24 pt-12">
+            <SectionHeading index="03" title="input / tick">
+              Built-in inputs are{" "}
+              <code className="font-mono text-foreground">keyboard</code>,{" "}
+              <code className="font-mono text-foreground">dpad</code>, and{" "}
+              <code className="font-mono text-foreground">sliders</code>. Bind the handle to your
+              own element. Hardware sinks come later.
+            </SectionHeading>
+            <CodeBlock code={HANDLES} label="handles" />
+          </section>
+        </article>
+      </div>
+    </div>
   );
 }

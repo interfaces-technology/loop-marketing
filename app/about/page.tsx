@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Arrow, PageHeader, SectionHeading } from "@/components/ui";
 import { LAB_ORG, LIBRARY_REPO } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -10,46 +11,66 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <article className="flex max-w-2xl flex-col gap-8">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-medium tracking-tight">About</h1>
-        <p className="leading-7 text-muted">
+    <div>
+      <PageHeader
+        eyebrow="Manifest / scope"
+        title="A small wire, on purpose."
+        description={
+          <p>
           Loop is made by{" "}
-          <a href={LAB_ORG} className="text-foreground underline" target="_blank" rel="noreferrer">
+          <a href={LAB_ORG} className="text-foreground underline underline-offset-4 hover:text-accent" target="_blank" rel="noreferrer">
             Interfaces Lab
           </a>
           . The library is MIT. This site is marketing, docs, and live examples — not the
           package itself.
-        </p>
-      </div>
+          </p>
+        }
+      />
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-medium">What Loop is</h2>
-        <p className="leading-7 text-muted">
-          The wire. You author the two ends; Loop carries a normalized packet between them
-          and never renders anything itself.
-        </p>
-      </section>
+      <article className="grid gap-12 pt-12 lg:grid-cols-2 lg:gap-20">
+        <section>
+          <SectionHeading index="01" title="What Loop is">
+            The wire. You author the two ends; Loop carries a normalized packet between them and
+            never renders anything itself.
+          </SectionHeading>
+          <div className="mt-8 border border-border bg-panel p-5 font-mono text-sm">
+            <p><span className="text-accent">source</span><span className="text-subtle"> / read</span></p>
+            <div className="my-3 ml-5 h-6 w-px bg-accent" aria-hidden="true" />
+            <p><span className="text-signal">packet</span><span className="text-subtle"> / normalize</span></p>
+            <div className="my-3 ml-5 h-6 w-px bg-accent" aria-hidden="true" />
+            <p><span className="text-accent">sink</span><span className="text-subtle"> / render</span></p>
+          </div>
+        </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-medium">What Loop is not (v0.1)</h2>
-        <ul className="list-disc space-y-2 pl-5 leading-7 text-muted">
-          <li>Cross-device relay</li>
-          <li>A marketplace or publisher</li>
-          <li>An AI composer</li>
-          <li>A visual canvas</li>
-          <li>Accounts or hosting</li>
-        </ul>
-        <p className="leading-7 text-muted">Those are platform concerns, out of scope here.</p>
-      </section>
+        <section>
+          <SectionHeading index="02" title="What Loop is not (v0.1)">
+            Platform concerns stay out of this version.
+          </SectionHeading>
+          <ul className="mt-8 divide-y divide-border border-y border-border">
+            {[
+              "Cross-device relay",
+              "A marketplace or publisher",
+              "An AI composer",
+              "A visual canvas",
+              "Accounts or hosting",
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-3 py-3 font-mono text-xs text-muted">
+                <span className="text-accent" aria-hidden="true">×</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </article>
 
-      <p className="text-sm text-muted">
-        Library:{" "}
-        <a href={LIBRARY_REPO} className="text-foreground underline" target="_blank" rel="noreferrer">
-          github.com/interfaces-technology/loop
+      <div className="mt-16 flex flex-wrap gap-6 border-t border-border pt-8 font-mono text-xs">
+        <a href={LIBRARY_REPO} className="text-foreground hover:text-accent" target="_blank" rel="noreferrer">
+          Library repository <span aria-hidden="true">↗</span>
         </a>
-        . Spec: <Link href="/docs" className="text-foreground underline">docs</Link>.
-      </p>
-    </article>
+        <Link href="/docs" className="text-muted hover:text-accent">
+          Read the spec <Arrow />
+        </Link>
+      </div>
+    </div>
   );
 }

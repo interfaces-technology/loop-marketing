@@ -50,18 +50,35 @@ export function DpadSquareDemo() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <p className="text-xs tracking-[0.1em] text-muted uppercase">device: {device}</p>
-      <p className="max-w-xs text-center text-sm text-muted">
-        Use arrow keys, WASD, or a gamepad d-pad
-      </p>
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-[0.65rem] tracking-[0.1em] uppercase">
+        <span className="text-muted">Use arrow keys, WASD, or a gamepad d-pad</span>
+        <span className="flex items-center gap-2 text-signal">
+          <span className="h-1.5 w-1.5 bg-signal" aria-hidden="true" />
+          device: {device}
+        </span>
+      </div>
       <div
         ref={arenaRef}
-        className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-xl border border-border bg-panel"
+        tabIndex={0}
+        aria-label="D-pad movement arena"
+        className="relative aspect-[16/9] w-full overflow-hidden border border-border-strong bg-background outline-none focus:border-accent"
       >
         <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+          aria-hidden="true"
+        />
+        <span className="absolute top-3 left-3 font-mono text-[0.62rem] text-subtle uppercase">
+          x/y normalized
+        </span>
+        <div
           ref={squareRef}
-          className="absolute top-1/2 left-1/2 h-12 w-12 rounded-md bg-accent"
+          className="absolute top-1/2 left-1/2 h-10 w-10 border border-foreground/20 bg-accent shadow-[0_0_32px_color-mix(in_srgb,var(--accent)_45%,transparent)]"
           style={{ transform: "translate(-50%, -50%)" }}
         />
       </div>
