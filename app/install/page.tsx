@@ -39,19 +39,22 @@ export default function InstallPage() {
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-medium">npm</h2>
+        <p className="text-sm text-muted">Copy and paste this into your terminal.</p>
         <CodeBlock code={NPM} />
       </section>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-medium">Quick start</h2>
+        <p className="text-sm text-muted">Then paste this into your app.</p>
         <CodeBlock code={IMPORT} />
       </section>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-medium">Browser, no build step</h2>
         <p className="leading-7 text-muted">
-          Point a module script at the built file after <code className="font-mono text-foreground">npm run build</code>{" "}
-          in the library repo, or serve <code className="font-mono text-foreground">dist/index.js</code> yourself.
+          Copy and paste this if you are loading Loop with a script tag after{" "}
+          <code className="font-mono text-foreground">npm run build</code> in the library repo, or
+          serve <code className="font-mono text-foreground">dist/index.js</code> yourself.
         </p>
         <CodeBlock code={SCRIPT} />
       </section>

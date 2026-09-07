@@ -1,6 +1,6 @@
 # Loop Marketing
 
-Standalone Next.js 16 site for Loop. Live: [loop-marketing-five.vercel.app](https://loop-marketing-five.vercel.app). The library lives at [`interfaces-technology/loop`](https://github.com/interfaces-technology/loop) (`@theinterfaces-lab/loop`). This repository owns marketing, docs, and live examples.
+Standalone Next.js 16 site for Loop. Live: [loop.theinterfaces.company](https://loop.theinterfaces.company). The library lives at [`interfaces-technology/loop`](https://github.com/interfaces-technology/loop) (`@theinterfaces-lab/loop`). This repository owns marketing, docs, and live examples.
 
 ## Setup
 
