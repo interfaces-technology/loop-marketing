@@ -1,0 +1,24 @@
+# Loop Marketing
+
+Standalone Next.js 16 site for Loop. The library lives at [`interfaces-technology/loop`](https://github.com/interfaces-technology/loop) (`@theinterfaces-lab/loop`). This repository owns marketing, docs, and live examples.
+
+## Setup
+
+```bash
+npm install
+npm run dev
+```
+
+Until the package is on npm, `@theinterfaces-lab/loop` is installed from GitHub (`hamza/site-links` until that lands on main). The library `prepare` script builds `dist/`.
+
+## Routes
+
+`/`, `/install`, `/docs`, `/docs/api`, `/examples`, `/examples/live-text`, `/examples/dpad-square`, `/examples/sliders-cube`, `/about`.
+
+## Quality gates
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
