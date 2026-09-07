@@ -43,7 +43,7 @@ export function SlidersCubeDemo() {
     const unbindR = bindSlider(sliderRRef.current, sliders.rotation, "r");
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x111111);
+    scene.background = new THREE.Color(0x080909);
 
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
     camera.position.z = 3;
@@ -53,7 +53,7 @@ export function SlidersCubeDemo() {
 
     const cube = new THREE.Mesh(
       new THREE.BoxGeometry(1, 1, 1),
-      new THREE.MeshStandardMaterial({ color: 0xe74c3c }),
+      new THREE.MeshStandardMaterial({ color: 0xff5a47 }),
     );
     scene.add(cube);
 
@@ -111,52 +111,63 @@ export function SlidersCubeDemo() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <p className="text-xs tracking-[0.1em] text-muted uppercase">device: {device}</p>
-      <p className="max-w-sm text-center text-sm text-muted">
-        Use on-screen sliders, a gamepad (sticks + RT), or MIDI CC knobs
-      </p>
-      <div
-        ref={containerRef}
-        className="h-[min(400px,60vh)] w-full max-w-[500px] overflow-hidden rounded-xl border border-border"
-      />
-      <div className="flex w-full max-w-xs flex-col gap-3 text-sm">
-        <label className="flex items-center gap-3">
-          <span className="w-[70px] text-muted">X</span>
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-[0.65rem] tracking-[0.1em] uppercase">
+        <span className="text-muted">Sliders, gamepad sticks + RT, or MIDI CC</span>
+        <span className="flex items-center gap-2 text-signal">
+          <span className="h-1.5 w-1.5 bg-signal" aria-hidden="true" />
+          device: {device}
+        </span>
+      </div>
+      <div className="grid gap-px bg-border lg:grid-cols-[1fr_16rem]">
+        <div
+          ref={containerRef}
+          className="h-[min(460px,60vh)] min-h-80 w-full overflow-hidden bg-background"
+        />
+        <div className="flex flex-col justify-center gap-6 bg-background p-5 text-sm">
+        <label className="grid gap-2">
+          <span className="flex justify-between font-mono text-[0.65rem] tracking-[0.1em] text-muted uppercase">
+            Position X
+            <span className="text-foreground tabular-nums">{vals.x.toFixed(2)}</span>
+          </span>
           <input
             ref={sliderXRef}
             type="range"
             min={0}
             max={100}
             defaultValue={50}
-            className="flex-1 accent-accent"
+            className="w-full accent-accent"
           />
-          <span className="w-9 text-right font-mono text-muted tabular-nums">{vals.x.toFixed(2)}</span>
         </label>
-        <label className="flex items-center gap-3">
-          <span className="w-[70px] text-muted">Y</span>
+        <label className="grid gap-2">
+          <span className="flex justify-between font-mono text-[0.65rem] tracking-[0.1em] text-muted uppercase">
+            Position Y
+            <span className="text-foreground tabular-nums">{vals.y.toFixed(2)}</span>
+          </span>
           <input
             ref={sliderYRef}
             type="range"
             min={0}
             max={100}
             defaultValue={50}
-            className="flex-1 accent-accent"
+            className="w-full accent-accent"
           />
-          <span className="w-9 text-right font-mono text-muted tabular-nums">{vals.y.toFixed(2)}</span>
         </label>
-        <label className="flex items-center gap-3">
-          <span className="w-[70px] text-muted">Rotate</span>
+        <label className="grid gap-2">
+          <span className="flex justify-between font-mono text-[0.65rem] tracking-[0.1em] text-muted uppercase">
+            Rotation
+            <span className="text-foreground tabular-nums">{vals.r.toFixed(2)}</span>
+          </span>
           <input
             ref={sliderRRef}
             type="range"
             min={0}
             max={100}
             defaultValue={0}
-            className="flex-1 accent-accent"
+            className="w-full accent-accent"
           />
-          <span className="w-9 text-right font-mono text-muted tabular-nums">{vals.r.toFixed(2)}</span>
         </label>
+        </div>
       </div>
     </div>
   );

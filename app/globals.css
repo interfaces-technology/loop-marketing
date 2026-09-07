@@ -1,21 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #f0f0f0;
-  --muted: #8a8a8a;
-  --panel: #111111;
-  --border: #222222;
-  --accent: #e74c3c;
+  --background: #080909;
+  --foreground: #f2f1ed;
+  --muted: #97958e;
+  --subtle: #5f5e59;
+  --panel: #0e1010;
+  --panel-raised: #141616;
+  --border: #292b2a;
+  --border-strong: #3a3d3b;
+  --accent: #ff5a47;
+  --accent-soft: #2d1512;
+  --signal: #9fe870;
+  --signal-soft: #142310;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
   --color-panel: var(--panel);
+  --color-panel-raised: var(--panel-raised);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -23,14 +35,87 @@
 html {
   background: var(--background);
   color: var(--foreground);
+  scroll-behavior: smooth;
 }
 
 body {
+  min-width: 320px;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 32%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 24%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+  content: "";
+  pointer-events: none;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  outline-offset: 4px;
+}
+
+:focus-visible {
+  outline: 1px solid var(--accent);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  margin-left: 0.2em;
+  background: var(--accent);
+  vertical-align: -0.14em;
+  animation: cursor-blink 1.1s steps(2, start) infinite;
+}
+
+.signal-line {
+  background: linear-gradient(90deg, var(--accent), var(--signal), var(--accent));
+  background-size: 200% 100%;
+  animation: signal-flow 4s linear infinite;
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes signal-flow {
+  to {
+    background-position: -200% 0;
+  }
 }
 
 ::selection {
   background: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

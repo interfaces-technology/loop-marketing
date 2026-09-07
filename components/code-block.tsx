@@ -2,31 +2,65 @@
 
 import { useState } from "react";
 
-export function CodeBlock({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
+import { copyText } from "@/lib/clipboard";
+
+export function CodeBlock({
+  code,
+  label = "terminal",
+  prompt = false,
+}: {
+  code: string;
+  label?: string;
+  prompt?: boolean;
+}) {
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
 
   async function copy() {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1600);
-    } catch {
-      setCopied(false);
+    const copiedSuccessfully = await copyText(code);
+
+    if (copiedSuccessfully) {
+      setCopyState("copied");
+    } else {
+      setCopyState("failed");
     }
+
+    window.setTimeout(() => setCopyState("idle"), 1600);
   }
 
   return (
-    <div className="relative overflow-hidden rounded-lg border border-border bg-panel">
-      <button
-        type="button"
-        onClick={copy}
-        className="absolute top-2 right-2 rounded-md border border-border bg-background px-2.5 py-1 text-xs text-muted hover:text-foreground"
-      >
-        {copied ? "Copied" : "Copy"}
-      </button>
-      <pre className="overflow-x-auto p-4 pr-20 text-sm leading-6">
-        <code className="font-mono text-[0.9em]">{code}</code>
+    <div className="overflow-hidden border border-border bg-panel">
+      <div className="flex min-h-10 items-center justify-between border-b border-border bg-panel-raised">
+        <div className="flex items-center gap-3 px-3">
+          <span className="flex gap-1.5" aria-hidden="true">
+            <span className="h-1.5 w-1.5 bg-accent" />
+            <span className="h-1.5 w-1.5 bg-border-strong" />
+            <span className="h-1.5 w-1.5 bg-signal" />
+          </span>
+          <span className="font-mono text-[0.62rem] tracking-[0.12em] text-subtle uppercase">
+            {label}
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={copy}
+          className="self-stretch border-l border-border px-3 font-mono text-[0.62rem] tracking-[0.1em] text-muted uppercase hover:bg-accent-soft hover:text-accent"
+        >
+          {copyState === "copied" ? "Copied" : copyState === "failed" ? "Copy failed" : "Copy"}
+        </button>
+      </div>
+      <pre className="overflow-x-auto p-4 text-sm leading-7 sm:p-5">
+        <code className="font-mono text-[0.82rem] text-foreground">
+          {prompt ? <span className="mr-3 select-none text-accent">$</span> : null}
+          {code}
+        </code>
       </pre>
+      <p className="sr-only" role="status" aria-live="polite">
+        {copyState === "copied"
+          ? "Code copied to clipboard"
+          : copyState === "failed"
+            ? "Clipboard access is unavailable"
+            : ""}
+      </p>
     </div>
   );
 }
